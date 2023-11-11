@@ -5,4 +5,7 @@ api_tests.egg-info/SOURCES.txt
 api_tests.egg-info/dependency_links.txt
 api_tests.egg-info/top_level.txt
 api_tests/src/__init__.py
+api_tests/src/utilities/__init__.py
+api_tests/src/utilities/genericUtilities.py
 api_tests/tests/__init__.py
+api_tests/tests/test_healthcheck.py
