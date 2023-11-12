@@ -17,7 +17,7 @@ def test_create_customer_only_email_password():
     cust_obj = CustomerHelper()
     cust_api_info = cust_obj.create_customer(email=email, password=password)
 
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     # verify status code of the call
 
     # verify email in the response
