@@ -16,5 +16,4 @@ class CustomerHelper(object):
         payload['password'] = password
         payload.update(kwargs)
 
-
-
+        return True
