@@ -2,6 +2,7 @@ import logging as logger
 import random
 import string
 
+
 def generate_random_email_and_password(domain=None, email_prefix=None):
     logger.debug("Generating random email and password.")
 

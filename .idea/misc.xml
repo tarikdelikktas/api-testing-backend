@@ -4,4 +4,7 @@
     <option name="sdkName" value="Python 2.7 (api-testing-backend) (2)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (api-testing-backend)" project-jdk-type="Python SDK" />
+  <component name="PythonCompatibilityInspectionAdvertiser">
+    <option name="version" value="3" />
+  </component>
 </project>
