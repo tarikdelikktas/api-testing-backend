@@ -1,6 +1,7 @@
-
-from api_tests.src.utilities.genericUtilities import  generate_random_email_and_password
+from api_tests.src.utilities.genericUtilities import generate_random_email_and_password
 from api_tests.src.utilities.requestsUtility import RequestsUtility
+
+
 class CustomerHelper(object):
     def __init__(self):
         self.request_utility = RequestsUtility()
@@ -19,4 +20,4 @@ class CustomerHelper(object):
         payload.update(kwargs)
 
         create_user_json = self.request_utility.post('customers', payload=payload, expected_status_code=201)
-        return True
+        return create_user_json

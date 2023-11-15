@@ -8,6 +8,7 @@ from api_tests.src.dao.customers_dao import CustomersDAO
 
 @pytest.mark.tcid1
 def test_create_customer_only_email_password():
+
     logger.info("TEST: Create new customer with email and password only.")
 
     rand_info = generate_random_email_and_password()
@@ -26,5 +27,8 @@ def test_create_customer_only_email_password():
     # verify customer is created in database
     cust_dao = CustomersDAO()
     cust_info = cust_dao.get_customer_by_email(email)
-    import pdb;
-    pdb.set_trace()
+    id_in_api = cust_api_info['id']
+    id_in_db = cust_info[0]['ID']
+    assert id_in_api == id_in_db, f"Create customer response 'id' not same as 'ID; in database" \
+                                f"Email: {email}"
+

@@ -1,4 +1,7 @@
+import logging
+
 import pymysql
+import logging as logger
 from api_tests.src.utilities.credentialsUtility import CredentialsUtility
 
 
@@ -17,8 +20,11 @@ class DBUtility(object):
         return connection
 
     def execute_select(self, sql):
+
         conn = self.create_connection()
+
         try:
+            logging.debug(f"Executing: {sql}")
             cur = conn.cursor(pymysql.cursors.DictCursor)
             cur.execute(sql)
             rs_dict = cur.fetchall()
