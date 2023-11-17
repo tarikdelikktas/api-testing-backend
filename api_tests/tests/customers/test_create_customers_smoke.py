@@ -4,6 +4,7 @@ import logging as logger
 from api_tests.src.utilities.genericUtilities import generate_random_email_and_password
 from api_tests.src.helpers.customers_helper import CustomerHelper
 from api_tests.src.dao.customers_dao import CustomersDAO
+from api_tests.src.utilities.requestsUtility import RequestsUtility
 
 
 @pytest.mark.tcid1
@@ -15,7 +16,7 @@ def test_create_customer_only_email_password():
     email = rand_info['email']
     password = rand_info['password']
 
-    # make the call
+    # make the api call
     cust_obj = CustomerHelper()
     cust_api_info = cust_obj.create_customer(email=email, password=password)
 
@@ -31,4 +32,26 @@ def test_create_customer_only_email_password():
     id_in_db = cust_info[0]['ID']
     assert id_in_api == id_in_db, f"Create customer response 'id' not same as 'ID; in database" \
                                 f"Email: {email}"
+
+@pytest.mark.tcid3
+def test_create_customer_fail_for_existing_email():
+
+    # get existing email from db
+    cust_dao = CustomersDAO()
+    existing_cust = cust_dao.get_random_customer_from_db()
+    existing_email = existing_cust[0]['user_email']
+
+    # make the api call
+    req_helper = RequestsUtility()
+    payload = {"email": existing_email, "password": "Password1"}
+    cust_api_info = req_helper.post(endpoint='customer', payload=payload, expected_status_code=400)
+
+    assert cust_api_info['code'] == 'registration-error-email-exist', f"Create customer with" \
+                                                                      f"existing user error 'code' is not correct. Expected: 'registration-error-email-exist', " \
+                                                                      f"Actual: {cust_api_info['code']}"
+    assert cust_api_info['message'] == 'An account is already registered with your email address. Please log in.', \
+        f"Create customer with existing user error 'message' is not correct. " \
+        f"Expected: 'An account is already registered with your email address. Please log in.'," \
+        f"Actual: {cust_api_info['message']}"
+
 
