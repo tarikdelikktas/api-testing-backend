@@ -22,5 +22,3 @@ class CustomersDAO(object):
         rs_sql = self.db_helper.execute_select(sql)
 
         return random.sample(rs_sql, int(qty))
-
-

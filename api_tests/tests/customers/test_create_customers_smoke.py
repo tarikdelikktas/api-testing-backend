@@ -41,17 +41,19 @@ def test_create_customer_fail_for_existing_email():
     existing_cust = cust_dao.get_random_customer_from_db()
     existing_email = existing_cust[0]['user_email']
 
-    # make the api call
+    # call the api
     req_helper = RequestsUtility()
     payload = {"email": existing_email, "password": "Password1"}
-    cust_api_info = req_helper.post(endpoint='customer', payload=payload, expected_status_code=400)
+    cust_api_info = req_helper.post(endpoint='customers', payload=payload, expected_status_code=400)
 
-    assert cust_api_info['code'] == 'registration-error-email-exist', f"Create customer with" \
-                                                                      f"existing user error 'code' is not correct. Expected: 'registration-error-email-exist', " \
-                                                                      f"Actual: {cust_api_info['code']}"
-    assert cust_api_info['message'] == 'An account is already registered with your email address. Please log in.', \
+    assert cust_api_info['code'] == 'registration-error-email-exists', f"Create customer with" \
+       f"existing user error 'code' is not correct. Expected: 'registration-error-email-exists', " \
+        f"Actual: {cust_api_info['code']}"
+
+    # import pdb; pdb.set_trace()
+    assert cust_api_info['message'] == "An account is already registered with your email address. <a href=\"#\" class=\"showlogin\">Please log in.</a>", \
         f"Create customer with existing user error 'message' is not correct. " \
-        f"Expected: 'An account is already registered with your email address. Please log in.'," \
+        f'Expected: "An account is already registered with your email address. <a href=\"#\" class=\"showlogin\">Please log in.</a>", ' \
         f"Actual: {cust_api_info['message']}"
 
 
