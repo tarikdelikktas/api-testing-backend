@@ -7,6 +7,7 @@ from api_tests.src.dao.customers_dao import CustomersDAO
 from api_tests.src.utilities.requestsUtility import RequestsUtility
 
 
+@pytest.mark.customers
 @pytest.mark.tcid1
 def test_create_customer_only_email_password():
 
@@ -33,6 +34,7 @@ def test_create_customer_only_email_password():
     assert id_in_api == id_in_db, f"Create customer response 'id' not same as 'ID; in database" \
                                 f"Email: {email}"
 
+@pytest.mark.customers
 @pytest.mark.tcid3
 def test_create_customer_fail_for_existing_email():
 
