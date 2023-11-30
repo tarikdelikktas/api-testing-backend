@@ -23,7 +23,6 @@ class TestProductsWithFilter(object):
         # make the API call
         payload = dict()
         payload['after'] = after_created_date
-        payload['per_page'] = 100
         rs_api = ProductsHelper().call_list_all_products(payload)
         assert rs_api, f"Empty Response for 'list products with filter"
 
