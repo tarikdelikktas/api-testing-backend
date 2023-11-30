@@ -3,8 +3,8 @@ from api_tests.src.utilities.requestsUtility import RequestsUtility
 from api_tests.src.dao.products_dao import ProductsDAO
 from api_tests.src.helpers.products_helper import ProductsHelper
 
+pytestmark = [pytest.mark.products, pytest.mark.smoke]
 
-@pytest.mark.products
 @pytest.mark.tcid4
 def test_get_all_products():
     req_helper = RequestsUtility()
@@ -13,7 +13,6 @@ def test_get_all_products():
     assert rs_api, "Response of list all products is empty"
 
 
-@pytest.mark.products
 @pytest.mark.tcid5
 def test_get_product_id_24():
     # get a product (test data) from database
