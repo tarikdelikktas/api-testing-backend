@@ -5,6 +5,7 @@ import pytest
 
 pytestmark = [pytest.mark.products, pytest.mark.smoke]
 
+
 @pytest.mark.tcid6
 def test_create_1_simple_product():
     # generate some data for the product
