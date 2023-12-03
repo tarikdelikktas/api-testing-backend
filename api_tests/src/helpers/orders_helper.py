@@ -21,7 +21,7 @@ class OrdersHelper(object):
         # if user adds more info to payload, then update it
         if additional_args:
             assert isinstance(additional_args,
-                              dict), f"Parameter 'additional_args' must be a dictionary but found {type(additional_args)}"
+                              dict), f"Parameter 'additional_args' must be a dictionary but found '{type(additional_args)}'"
             payload.update(additional_args)
 
         rs_api = self.woo_helper.post('orders', params=payload, expected_status_code=201)

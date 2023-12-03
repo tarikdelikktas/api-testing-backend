@@ -20,7 +20,12 @@ def test_create_paid_order_guest_user():
     ]}
     order_json = order_helper.create_order(additional_args=info)
 
-    import pdb; pdb.set_trace()
-
     # verify response
+    assert order_json, f"Create order response is empty"
+    assert order_json['customer_id'] == 0, (f"Create order as guest as expected default"
+                                            f"'customer_id=0 but got '{order_json['customer_id']}'")
+    assert len(order_json['line_items']) == 1, (f"Expected only 1 item in order but"
+                                                f"found '{len(order_json['line_items'])}'"
+                                                f"Order id: {order_json['id']}.")
+    
     # verify DB
