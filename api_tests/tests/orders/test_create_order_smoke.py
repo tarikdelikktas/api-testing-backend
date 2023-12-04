@@ -3,6 +3,9 @@ from api_tests.src.dao.orders_dao import OrdersDAO
 from api_tests.src.helpers.orders_helper import OrdersHelper
 import pytest
 
+
+@pytest.mark.smoke
+@pytest.mark.orders
 @pytest.mark.tcid8
 def test_create_paid_order_guest_user():
     rand_dao = ProductsDAO()
@@ -33,8 +36,13 @@ def test_create_paid_order_guest_user():
     # verify DB
     order_id = order_json['id']
     line_info = orders_dao.get_order_lines_by_order_id(order_id)
-    assert line_info,  f"Create order line item not found in DB. Order id: {order_id}"
+    assert line_info, f"Create order line item not found in DB. Order id: {order_id}"
 
     line_items = [i for i in line_info if i['order_item_type'] == 'line_item']
-    
-    import pdb; pdb.set_trace()
+    assert len(line_items) == 1, f"Expected 1 line item, but found {len(line_items)}. Ordder id: {order_id}."
+
+    line_id = line_items[0]['order_item_id']
+    line_details = orders_dao.get_order_item_details(line_id)
+    db_product_id = line_details['_product_id']
+    assert str(db_product_id) == str(product_id), (f"Create order 'product_id' in db does not match in API."
+                                                   f"API product id: {product_id}, DB product id: {db_product_id}")

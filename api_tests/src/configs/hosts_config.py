@@ -5,7 +5,7 @@ API_HOSTS = {
 }
 
 WOO_API_HOSTS = {
-    "test": "http://localhost:10008/wp-json",
+    "test": "http://localhost:10008",
     "dev": "",
     "prod": ""
 }
