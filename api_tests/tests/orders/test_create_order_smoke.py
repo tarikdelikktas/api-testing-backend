@@ -4,17 +4,30 @@ from api_tests.src.helpers.customers_helper import CustomerHelper
 import pytest
 
 
+@pytest.fixture(scope='module')
+def smoke_setup():
+    product_dao = ProductsDAO()
+    order_helper = OrdersHelper()
+    customer_helper = CustomerHelper()
+
+    rand_product = product_dao.get_random_product_from_db(1)
+    product_id = rand_product[0]['ID']
+
+    info = {
+        "product_id": product_id,
+        "order_helper": order_helper,
+        "customer_helper": customer_helper
+    }
+    return info
+
+
 @pytest.mark.smoke
 @pytest.mark.orders
 @pytest.mark.tcid8
-def test_create_paid_order_guest_user():
-    rand_dao = ProductsDAO()
-    order_helper = OrdersHelper()
-
+def test_create_paid_order_guest_user(smoke_setup):
     customer_id = 0
-    # get a product from DB
-    rand_product = rand_dao.get_random_product_from_db(1)
-    product_id = rand_product[0]['ID']
+    product_id = smoke_setup['product_id']
+    order_helper = smoke_setup['order_helper']
 
     # make the API call
     info = {"line_items": [
@@ -33,14 +46,11 @@ def test_create_paid_order_guest_user():
 @pytest.mark.smoke
 @pytest.mark.orders
 @pytest.mark.tcid9
-def test_create_paid_order_new_created_customer():
-    rand_dao = ProductsDAO()
-    order_helper = OrdersHelper()
-    customer_helper = CustomerHelper()
-
-    # get a product from DB
-    rand_product = rand_dao.get_random_product_from_db(1)
-    product_id = rand_product[0]['ID']
+def test_create_paid_order_new_created_customer(smoke_setup):
+    # create helper objects
+    customer_helper = smoke_setup['customer_helper']
+    product_id = smoke_setup['product_id']
+    order_helper = smoke_setup['order_helper']
 
     # make the API call
     cust_info = customer_helper.create_customer()
